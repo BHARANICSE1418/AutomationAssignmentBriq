@@ -1,0 +1,72 @@
+package ExcelAutomation;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class uploadPNGFilesOnly 
+{
+
+	public static void main(String[] args) throws InterruptedException, AWTException
+	{
+		WebDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		
+		driver.get("https://the-internet.herokuapp.com/upload");
+		
+		driver.findElement(By.id("drag-drop-upload")).click();
+		
+		List <String> filePath=new ArrayList<String>();
+    	filePath.add("C:\\Users\\Hp\\fileuplad\\F63C180C-9C08-491C-B162-833292F9FE74.png");
+    	filePath.add("cat.png");
+    	filePath.add("F63C180C-9C08-491C-B162-833292F9FE74.png");
+    	filePath.add("icon.png");
+    	filePath.add("kisspng-2-16-league-of-legends-world-championship-emote-vi-vg-legue-of-legends-5ba330699a7b32.8833151015374214176328.png");
+    	filePath.add("lolemoji.png");
+    	filePath.add("PostMan1.png");
+    	filePath.add("Price generator.png");
+    	filePath.add("sample.png");
+    	filePath.add("sample_media_file.png");
+    	filePath.add("sc-element-highlight.png");
+    	filePath.add("TechReport.png");
+    	filePath.add("test.png");
+    	filePath.add("webdriverIO.png");
+    	filePath.add("763BDD62-2F67-4D9D-998A-CC30B9870670.png");
+    
+    		       
+	            for (String files : filePath) 
+	            {	
+	            Robot robot = new Robot();
+	            
+	            StringSelection stringSelection = new StringSelection(files);
+	            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+	            Thread.sleep(8000);
+	            robot.keyPress(KeyEvent.VK_CONTROL);
+	            robot.keyPress(KeyEvent.VK_V);
+	            robot.keyRelease(KeyEvent.VK_V);
+	            robot.keyRelease(KeyEvent.VK_CONTROL);
+	            robot.keyPress(KeyEvent.VK_ENTER);
+	            robot.keyRelease(KeyEvent.VK_ENTER);
+	            Thread.sleep(8000);
+	        	System.out.println(filePath);
+	        	driver.findElement(By.id("drag-drop-upload")).click();
+	        	
+	        	
+	            }
+	          		
+	}
+
+}
