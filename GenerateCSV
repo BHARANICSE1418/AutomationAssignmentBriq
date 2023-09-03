@@ -1,0 +1,88 @@
+package ExcelAutomation;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+public class storedincsvfile 
+{
+
+public static void main(String[] args) 
+{
+	 String url = "http://the-internet.herokuapp.com/challenging_dom";
+	 try
+	 {
+	 Document document = Jsoup.connect(url).get();
+     Element table = document.select("table").first(); // Assuming the table is the first one on the page
+     Elements rows = table.select("tr");
+     
+     List<List<String>> tableData = new ArrayList<>();
+     for (Element row : rows) 
+     {
+    	 Elements heads= row.select("th");
+         Elements cells = row.select("td");
+         
+         List<String> rowData = new ArrayList<>();
+         for (int i =0; i < heads.size() - 1; i++) 
+         {
+          rowData.add(heads.get(i).text());
+         }
+         for (int i =0; i < cells.size() - 1; i++) 
+         {
+          rowData.add(cells.get(i).text());
+         }     
+         tableData.add(rowData);   
+     }
+     
+     for (List<String> rowData : tableData)
+     {
+         System.out.println(rowData);
+     }
+    
+     LocalDateTime currentDateTime = LocalDateTime.now();
+     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy-HH-mm-ss");
+     String Timestamp = currentDateTime.format(formatter);
+     String csvFileName = "./Newdatafolder/Timestamp.csv";
+     
+     
+     
+     try (FileWriter csvWriter = new FileWriter(csvFileName))
+     {
+         for (List<String> rowData : tableData) 
+         {
+             csvWriter.append(String.join(",", rowData));
+             csvWriter.append("\n");
+         }
+         System.out.println("CSV file generated successfully.");
+     }
+     }
+	 	 
+ catch (IOException e) 
+	 {
+     e.printStackTrace();
+
+	 }
+
+	 
+}
+}
+
+	 
+ 
+
+
+
+
+	
+		
