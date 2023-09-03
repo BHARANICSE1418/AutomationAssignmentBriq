@@ -52,10 +52,8 @@ public static void main(String[] args)
     
      LocalDateTime currentDateTime = LocalDateTime.now();
      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy-HH-mm-ss");
-     String Timestamp = currentDateTime.format(formatter);
-     String csvFileName = "./Newdatafolder/Timestamp.csv";
-     
-     
+     String Timestamp = currentDateTime.format(formatter); 
+     String csvFileName = "./Newdatafolder/filename" + Timestamp + ".csv";
      
      try (FileWriter csvWriter = new FileWriter(csvFileName))
      {
