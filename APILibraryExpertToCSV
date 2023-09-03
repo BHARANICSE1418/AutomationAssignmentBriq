@@ -16,10 +16,10 @@ public class APITestbriq
 
   public static void main(String[] args) throws IOException 
   {
-	  String apiUrl = "https://data.sfgov.org/resource/p4e4-a5a7.json"; 
+      String apiUrl = "https://data.sfgov.org/resource/p4e4-a5a7.json"; 
       String csvFileName = "E:\\data.csv";
       try {
-          // Make an HTTP GET request using Unirest
+          
           HttpResponse<JsonNode> response = Unirest.get(apiUrl).asJson();
 
           // Check the response status code
@@ -31,8 +31,6 @@ public class APITestbriq
 
               // Create CSV writer
               CSVWriter csvWriter = new CSVWriter(new FileWriter(csvFileName));
-
-              // Write CSV header based on the first JSON object (assuming all objects have the same keys)
               JSONObject firstJsonObject = jsonArray.getJSONObject(0);
               String[] headers = (String[]) firstJsonObject.keySet().toArray(new String[0]);
               csvWriter.writeNext(headers);
@@ -48,10 +46,7 @@ public class APITestbriq
 
                   csvWriter.writeNext(data);
               }
-
-              // Close CSV writer
               csvWriter.close();
-
               System.out.println("Data has been exported to " + csvFileName);
           } else {
               System.err.println("Failed to fetch data. Response code: " + statusCode);
@@ -59,7 +54,7 @@ public class APITestbriq
       } catch (Exception e) {
           e.printStackTrace();
       } finally {
-          // Shutdown Unirest to release resources
+        
           Unirest.shutdown();
       }
   }
