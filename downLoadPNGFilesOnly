@@ -1,0 +1,37 @@
+package ExcelAutomation;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class downloadonlypng
+{
+
+	public static void main(String[] args) 
+	{
+        // Chrome driver path stored in my computer System variable
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://the-internet.herokuapp.com/download");
+		 List<WebElement> allLinks = driver.findElements(By.tagName("a"));
+		 for(WebElement link:allLinks)
+		 {
+		  List<WebElement> downloadlinks = link.findElements(By.xpath("//a[contains(@href,'.png')]"));	
+			 for (WebElement downloadLink : downloadlinks) 
+			 {
+		        downloadLink.click();
+		        
+		      WebElement lastlink= driver.findElement(By.linkText("F63C180C-9C08-491C-B162-833292F9FE74.png"));
+		      if(downloadLink.equals(lastlink))
+		      {
+		    	  driver.close();
+		      }
+		     }
+			 
+		 }
+		
+	  }
+
+}
