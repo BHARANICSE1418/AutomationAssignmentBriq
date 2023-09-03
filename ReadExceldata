@@ -1,0 +1,55 @@
+package ExcelAutomation;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+
+public class Readdatacollection 
+{
+
+public static void main(String[] args) 
+{
+	 String url = "http://the-internet.herokuapp.com/challenging_dom";
+	 try
+	 {
+	 Document document = Jsoup.connect(url).get();
+     Element table = document.select("table").first();
+     Elements rows = table.select("tr");
+     
+     List<List<String>> tableData = new ArrayList<>();
+     for (Element row : rows) 
+     {
+    	 Elements heads= row.select("th");
+         Elements cells = row.select("td");
+         
+         List<String> rowData = new ArrayList<>();
+         for (int i =0; i < heads.size() - 1; i++) 
+         {
+          rowData.add(heads.get(i).text());
+         }
+         for (int i =0; i < cells.size() - 1; i++) 
+         {
+          rowData.add(cells.get(i).text());
+         }     
+         tableData.add(rowData);   
+     }
+     
+     for (List<String> rowData : tableData)
+     {
+         System.out.println(rowData);
+     }
+
+  } 
+	 
+catch (IOException e) 
+	 {
+     e.printStackTrace();
+    }
+}
+}
